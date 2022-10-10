@@ -1,6 +1,0 @@
-Warning: /home/ubuntu/Documents/plman/solucionej3.pl:12:
-Warning:    Redefined static procedure write/1
-Warning:    Previously defined at /home/ubuntu/Documents/plman/pl-man-game/main.pl:43
-% Disabled autoloading (loaded 34 files)
-% Disabled autoloading (loaded 4 files)
-% Disabled autoloading (loaded 0 files)
