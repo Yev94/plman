@@ -6,7 +6,185 @@ coco(DIR):-
 espacio(DIR):-
   see(normal, DIR, ' ').
 
-multiview(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6, OBJ7, OBJ8, OBJ9):-
+visionLeft(OBJ1, OBJ2, OBJ3, OBJ4):- 
+  see(normal, up-left, OBJ1),
+  see(normal, left, OBJ2),
+  see(normal, here, OBJ3),
+  see(normal, down-left, OBJ4).
+
+visionRight(OBJ1, OBJ2, OBJ3, OBJ4):- 
+  see(normal, up-right, OBJ1),
+  see(normal, here, OBJ2),
+  see(normal, right, OBJ3),
+  see(normal, down-right, OBJ4).
+
+visionUp(OBJ1, OBJ2, OBJ3, OBJ4):- 
+  see(normal, up-left, OBJ1),
+  see(normal, up, OBJ2),
+  see(normal, up-right, OBJ3),
+  see(normal, here, OBJ4).
+
+visionDown(OBJ1, OBJ2, OBJ3, OBJ4):- 
+  see(normal, here, OBJ1),
+  see(normal, down-left, OBJ2),
+  see(normal, down, OBJ3),
+  see(normal, down-right, OBJ4).
+
+visionUpLeft(OBJ1, OBJ2, OBJ3, OBJ4):- 
+  see(normal, up-left, OBJ1),
+  see(normal, up, OBJ2),
+  see(normal, left, OBJ3),
+  see(normal, here, OBJ4).
+
+visionUpRight(OBJ1, OBJ2, OBJ3, OBJ4):- 
+  see(normal, up, OBJ1),
+  see(normal, up-right, OBJ2),
+  see(normal, here, OBJ3),
+  see(normal, right, OBJ4).
+
+visionDownLeft(OBJ1, OBJ2, OBJ3, OBJ4):- 
+  see(normal, left, OBJ1),
+  see(normal, here, OBJ2),
+  see(normal, down-left, OBJ3),
+  see(normal, down, OBJ4).
+
+visionDownRight(OBJ1, OBJ2, OBJ3, OBJ4):- 
+  see(normal, here, OBJ1),
+  see(normal, right, OBJ2),
+  see(normal, down, OBJ3),
+  see(normal, down-right, OBJ4).
+
+visionUpLeft(
+  '.', '.',/**/ 
+  ' ', ' '/**/ 
+  /**//**//**/). 
+
+visionUpRight(
+  /**/'.','.', 
+  /**/' ',' ' 
+  /**//**//**/).
+
+visionDownLeft(
+  /**//**//**/ 
+  ' ',' '/**/, 
+  '.','.'/**/). 
+
+visionDownRight(
+  /**//**//**/ 
+  /**/' ',' ', 
+  /**/'.','.').
+
+
+wideVisionLeft(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6):- 
+  see(normal, up-left, OBJ1),
+  see(normal, up, OBJ2),
+  see(normal, left, OBJ3),
+  see(normal, here, OBJ4).
+  see(normal, down-left, OBJ5).
+  see(normal, down, OBJ6).
+
+wideVisionRight(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6):- 
+  see(normal, up, OBJ1),
+  see(normal, up-right, OBJ2),
+  see(normal, here, OBJ3),
+  see(normal, right, OBJ4).
+  see(normal, down, OBJ5).
+  see(normal, down-right, OBJ6).
+
+wideVisionUp(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6):- 
+  see(normal, up-left, OBJ1),
+  see(normal, up, OBJ2),
+  see(normal, left, OBJ3),
+  see(normal, here, OBJ4).
+  see(normal, down-left, OBJ5).
+  see(normal, down, OBJ6).
+
+wideVisionDown(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6):- 
+  see(normal, up, OBJ1),
+  see(normal, up-right, OBJ2),
+  see(normal, here, OBJ3),
+  see(normal, right, OBJ4).
+  see(normal, down, OBJ5).
+  see(normal, down-right, OBJ6).
+
+wideVisionUpLeft(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6):- 
+  see(normal, up-left, OBJ1),
+  see(normal, up, OBJ2),
+  see(normal, up-right, OBJ3),
+  see(normal, left, OBJ4).
+  see(normal, here, OBJ5).
+  see(normal, down-left, OBJ6).
+
+wideVisionUpRight(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6):- 
+  see(normal, up-left, OBJ1),
+  see(normal, up, OBJ2),
+  see(normal, up-right, OBJ3),
+  see(normal, here, OBJ4).
+  see(normal, right, OBJ5).
+  see(normal, down-right, OBJ6).
+
+wideVisionDownLeft(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6):- 
+  see(normal, up-left, OBJ1),
+  see(normal, left, OBJ2),
+  see(normal, here, OBJ3),
+  see(normal, down-left, OBJ4).
+  see(normal, down, OBJ5).
+  see(normal, down-right, OBJ6).
+
+wideVisionDownRight(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6):- 
+  see(normal, up-right, OBJ1),
+  see(normal, here, OBJ2),
+  see(normal, right, OBJ3),
+  see(normal, down-left, OBJ4).
+  see(normal, down, OBJ5).
+  see(normal, down-right, OBJ6).
+
+wideVisionLeft( 
+  '.', ' '/**/,
+  ' ', ' '/**/,
+  '.', ' '/**/). 
+
+wideVisionRight(
+  /**/' ','.', 
+  /**/' ',' ', 
+  /**/' ','.').
+
+wideVisionUp(   
+  ' ', ' ',' ',
+  ' ', ' ',' '
+  /**//**//**/). 
+
+wideVisionDown( 
+  /**//**//**/
+  ' ', ' ',' ', 
+  ' ', ' ',' ').
+
+wideVisionUpLeft( 
+  '.', ' ',' ',
+  ' ', ' '/**/,
+  '.' /**//**/). 
+
+wideVisionUpRight(
+  ' ',' ','.', 
+  /**/' ',' ', 
+  /**//**/'.').
+
+wideVisionDownLeft( 
+  '.' /**//**/,
+  ' ', ' '/**/,
+  '.', ' ',' ').
+
+wideVisionDownRight(
+  /**//**/'.', 
+  /**/' ',' ', 
+  ' ',' ','.').
+
+multiView(
+  '#', '.', '.', 
+  ' ', ' ', '#', 
+  '#', '.', ' ').
+
+multiView(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6, OBJ7, OBJ8, OBJ9):-
   see(normal, up-left, OBJ1),
   see(normal, up, OBJ2),
   see(normal, up-right, OBJ3),
@@ -43,23 +221,27 @@ objetos(X):-
   palanca(X).
 
 %------------Reglas inicio personalizadas por mapa-------
+
+%Hacer vision Down
 do(move(down)) :- 
-  multiview('#', '.', '.', 
-            ' ', ' ', '#', 
-            '#', '.', ' '),
-  writeln('move specificly to down').
+  visionDown( 
+    /**//**//**/ 
+    /**/' '/**/, 
+    ' ',' ','.'),
+  writeln('multiView to down').
+
 
 do(move(down)) :- 
-  multiview('.', '.', '.', 
+  multiView('.', '.', '.', 
             '#', ' ', '#', 
             ' ', ' ', '.'),
-  writeln('move specificly to down').
+  writeln('multiView to down').
 
 do(move(down)) :- 
-  multiview('.', ' ', '.', 
+  multiView('.', ' ', '.', 
             '#', ' ', '#', 
             ' ', ' ', ' '),
-  writeln('move specificly to down').
+  writeln('multiView to down').
 
 %----------Fin Reglas inicio personalizadas por mapa-------
 
@@ -85,95 +267,95 @@ do(move(DIR)) :-
 %-----------------Reglas fin personalizadas por mapa-------
 
 do(move(down)) :- 
-  multiview('#', '#', '#', 
+  multiView('#', '#', '#', 
             '#', ' ', '#', 
             '#', ' ', ' '),
-  writeln('move specificly to down').
+  writeln('multiView to down').
 
 do(move(right)) :- 
-  multiview(_, _, _, 
+  multiView(_, _, _, 
             ' ', ' ', ' ', 
             '#', '#', '#'),
-  writeln('move specificly to right').
+  writeln('multiView to right').
 
 
 do(move(up)) :- 
-  multiview('#', ' ', ' ', 
+  multiView('#', ' ', ' ', 
             ' ', ' ', '#', 
             '#', '#', '#'),
-  writeln('move specificly to up').
+  writeln('multiView to up').
 
 do(move(right)) :- 
-  multiview('#', ' ', '#', 
+  multiView('#', ' ', '#', 
             '#', ' ', ' ', 
             ' ', ' ', '#'),
-  writeln('move specificly to right').
+  writeln('multiView to right').
 
 do(move(right)) :- 
-  multiview(' ', ' ', '#', 
+  multiView(' ', ' ', '#', 
             '#', ' ', ' ', 
             _, _, _),
-  writeln('move specificly to right').
+  writeln('multiView to right').
 
 do(move(up)) :- 
-  multiview(' ', ' ', ' ', 
+  multiView(' ', ' ', ' ', 
             '#', ' ', '#', 
             '#', ' ', ' '),
-  writeln('move specificly to up').
+  writeln('multiView to up').
 
 do(move(left)) :- 
-  multiview('#', '#', '#', 
+  multiView('#', '#', '#', 
             ' ', ' ', ' ', 
             ' ', '#', ' '),
-  writeln('move specificly to left').
+  writeln('multiView to left').
 
 do(move(left)) :- 
-  multiview('#', '#', '#', 
+  multiView('#', '#', '#', 
             ' ', ' ', ' ', 
             '.', '#', '#'),
-  writeln('move specificly to left').
+  writeln('multiView to left').
 
 do(move(down)) :- 
-  multiview(' ', ' ', ' ', 
+  multiView(' ', ' ', ' ', 
             '#', ' ', '#', 
             ' ', ' ', ' '),
-  writeln('move specificly to down').
+  writeln('multiView to down').
 
 do(move(left)) :- 
-  multiview('#', '#', '#', 
+  multiView('#', '#', '#', 
             ' ', ' ', ' ', 
             ' ', '#', '#'),
-  writeln('move specificly to left').
+  writeln('multiView to left').
 
 do(move(down)) :- 
-  multiview('#', '#', '#', 
+  multiView('#', '#', '#', 
             '#', ' ', ' ', 
             ' ', ' ', '#'),
-  writeln('move specificly to down').
+  writeln('multiView to down').
 
 do(move(down)) :- 
-  multiview('#', ' ', ' ', 
+  multiView('#', ' ', ' ', 
             ' ', ' ', '#', 
             '#', ' ', ' '),
-  writeln('move specificly to down').
+  writeln('multiView to down').
 
 do(move(up)) :- 
-  multiview('#', ' ', '#', 
+  multiView('#', ' ', '#', 
             ' ', ' ', '#', 
             '#', '#', '#'),
-  writeln('move specificly to up').
+  writeln('multiView to up').
 
 do(move(up)) :- 
-  multiview(' ', ' ', ' ', 
+  multiView(' ', ' ', ' ', 
             '#', ' ', '#', 
             ' ', ' ', '#'),
-  writeln('move specificly to up').
+  writeln('multiView to up').
 
 do(move(right)) :- 
-  multiview('#', '#', '#', 
+  multiView('#', '#', '#', 
             ' ', ' ', ' ', 
             '#', ' ', '#'),
-  writeln('move specificly to right').
+  writeln('multiView to right').
 
 do(move(right)).
 %----------------Fin Reglas fin personalizadas por mapa-------
