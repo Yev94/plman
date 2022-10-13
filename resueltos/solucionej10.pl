@@ -159,7 +159,19 @@ dropIn(Recipient):-
 %! widevision
 %! multiVision
 
+do(move(none)):-
+  visionDownRight(
+    /**//**//**/
+    /**/' ','.',
+    /**/' ','|'),
+  writeln('visionDownRight to none').
 
+do(move(down)):-
+  visionDownRight(
+    /**//**//**/
+    /**/' ','.',
+    /**/'.','.'),
+  writeln('visionDownRight to down').
 
 %! ======= Fin Reglas INICIO personalizadas por mapa ========
 

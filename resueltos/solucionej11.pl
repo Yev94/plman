@@ -159,7 +159,30 @@ dropIn(Recipient):-
 %! widevision
 %! multiVision
 
+do(move(left)):-
+  see(normal, left, '?').
 
+do(move(left)):-
+  multiVision(
+    '.', '.', '.',
+    '.', ' ', '.',
+    '.', '.', '.');
+  multiVision(
+    '.', '.', '.',
+    '.', ' ', ' ',
+    '?', '.', '.');
+  multiVision(
+    ' ', ' ', '#',
+    ' ', ' ', '#',
+    '#', '#', '#'),
+  writeln('multiVision to left').
+
+do(move(right)):-
+  multiVision(
+    ' ', ' ', ' ',
+    '.', ' ', '.',
+    '#', '#', '#'),
+  writeln('multiVision to right').
 
 %! ======= Fin Reglas INICIO personalizadas por mapa ========
 
@@ -184,7 +207,6 @@ do(move(DIR)) :-
 %TODO vision
 %TODO widevision
 %TODO multivision
-
 
 
 %TODO ========== Fin Reglas FIN personalizadas por mapa =========

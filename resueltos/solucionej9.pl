@@ -185,7 +185,7 @@ do(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
-
+do(move(right)).
 
 %TODO ========== Fin Reglas FIN personalizadas por mapa =========
 do(move(none)).

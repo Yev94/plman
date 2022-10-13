@@ -16,6 +16,26 @@
 	// 	"description": "Log output to console"
 	// }
 
+	"doif": {
+		"scope": "prolog",
+		"prefix": "doif",
+		"body": [
+			"do(move($1)):-",
+			"\tsee(normal, $1, '${2:#}'),",
+		],
+		"description": "move if see"
+	},
+
+	"doifnot": {
+		"scope": "prolog",
+		"prefix": "doifnot",
+		"body": [
+			"do(move($1)):-",
+			"\tnot(see(normal, $1, '${2:#}')),",
+		],
+		"description": "move if see"
+	},
+
 	"notSee": {
 		"scope": "prolog",
 		"prefix": "no",

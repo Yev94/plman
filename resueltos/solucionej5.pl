@@ -136,7 +136,6 @@ validDir(DIR):-
 validObjects(CHAR):-
   CHAR = a;
   CHAR = k;
-  CHAR = o;
   CHAR = p;
   CHAR = w;
   CHAR = '¬'.
@@ -147,7 +146,6 @@ open(Obstacle):-
   havingObject(appearance(a)), Obstacle = '|';
   havingObject(appearance(k)), Obstacle = '-';
   havingObject(appearance(k)), Obstacle = '|';
-  havingObject(appearance(o)), Obstacle = '|';
   havingObject(appearance(p)), Obstacle = '%'.
 
 dropIn(Recipient):-

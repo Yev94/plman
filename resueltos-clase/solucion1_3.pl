@@ -159,6 +159,50 @@ dropIn(Recipient):-
 %! widevision
 %! multiVision
 
+do(move(right)):-
+  multiVision(
+    '#', '.', '#',
+    ' ', ' ', '.',
+    '#', '#', '#');
+  multiVision(
+    '#', '#', '#',
+    '.', ' ', '.',
+    '#', ' ', '#'),
+  writeln('multiVision to right').
+
+do(move(down)):-
+  multiVision(
+    '#', ' ', ' ',
+    '#', ' ', '#',
+    ' ', ' ', ' ');
+  multiVision(
+    '#', '#', '#',
+    '#', ' ', ' ',
+    '#', ' ', '#');
+  multiVision(
+    '#', ' ', ' ',
+    '.', ' ', '#',
+    '#', '.', '#');
+  multiVision(
+    '#', '#', '#',
+    '#', ' ', '#',
+    '#', ' ', ' ');
+  multiVision(
+    '#', ' ', '#',
+    '#', ' ', ' ',
+    ' ', ' ', '#'),
+  writeln('multiVision to down').
+
+do(move(up)):-
+  multiVision(
+    '.', ' ', '#',
+    '#', ' ', '#',
+    ' ', ' ', ' ');
+  multiVision(
+    '.', ' ', '#',
+    '#', ' ', '#',
+    '#', '#', '#'),
+  writeln('multiVision to up').
 
 
 %! ======= Fin Reglas INICIO personalizadas por mapa ========
@@ -186,6 +230,6 @@ do(move(DIR)) :-
 %TODO multivision
 
 
-
+do(move(left)).
 %TODO ========== Fin Reglas FIN personalizadas por mapa =========
 do(move(none)).
