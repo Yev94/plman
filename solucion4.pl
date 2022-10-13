@@ -1,6 +1,11 @@
 :- use_module('pl-man-game/main').
 
-% Inicio definicion vistas
+coco(DIR):-
+  see(normal, DIR, '.').
+
+espacio(DIR):-
+  see(normal, DIR, ' ').
+
 visionLeft(OBJ1, OBJ2, OBJ3, OBJ4):- 
   see(normal, up-left, OBJ1),
   see(normal, left, OBJ2),
@@ -124,66 +129,96 @@ multiVision(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6, OBJ7, OBJ8, OBJ9):-
   see(normal, down, OBJ8),
   see(normal, down-right, OBJ9),
   write(OBJ5).
-% Fin definción vistas
-% Inicio deficinión objetos
 
-validDir(DIR):- 
+dir_Valida(DIR):- 
   DIR = down; 
   DIR = up; 
   DIR = right; 
   DIR = left.
 
-validObjects(CHAR):-
+puertas(CHAR):- 
+  CHAR = '-'; 
+  CHAR = '|'.
+pistola(l).
+llaves(CHAR):- 
   CHAR = a;
-  CHAR = k;
-  CHAR = p;
-  CHAR = w;
-  CHAR = '¬'.
+  CHAR = r.
+bomba('+').
+palanca('/').
 
-open(Obstacle):-
-  havingObject(appearance(a)), Obstacle = '_';
-  havingObject(appearance(a)), Obstacle = '-';
-  havingObject(appearance(a)), Obstacle = '|';
-  havingObject(appearance(k)), Obstacle = '-';
-  havingObject(appearance(k)), Obstacle = '|';
-  havingObject(appearance(p)), Obstacle = '%'.
+pelota(o).
 
-dropIn(Recipient):-
-  havingObject(appearance(w)), Recipient = 'U'.
-% Fin definición objetos
+abre(Llave, Puerta):-llaves(Llave), puertas(Puerta).
 
-%! ========= Reglas INICIO personalizadas por mapa ==========
-%! vision
-%! widevision
-%! multiVision
+objetos(X):- 
+  pistola(X); 
+  llaves(X); 
+  bomba(X); 
+  palanca(X).
 
+%------------Reglas inicio personalizadas por mapa-------
+%vision
+%widevision
+%multiVision
 
+do(move(right)):-
+  multiVision(
+    '#', '.', '#',
+    ' ', ' ', '.',
+    '#', '#', '#'),
+  writeln('multiVision to right').
 
-%! ======= Fin Reglas INICIO personalizadas por mapa ========
+do(move(none)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    'E', '#', ' '),
+  writeln('multiVision to none').
+do(move(none)):-
+  multiVision(
+    ' ', ' ', ' ',
+    'E', ' ', ' ',
+    '.', '#', ' '),
+  writeln('multiVision to none').
+do(move(left)):-
+  multiVision(
+    'E', ' ', ' ',
+    ' ', ' ', ' ',
+    '.', '#', ' '),
+  writeln('multiVision to left').
+
+do(move(right)):-
+  multiVision(
+    ' ', ' ', ' ',
+    '#', ' ', ' ',
+    '#', '.', '#'),
+  writeln('multiVision to right').
+
+%----------Fin Reglas inicio personalizadas por mapa-------
+
 
 do(get(DIR)) :-
-  see(normal, DIR, OBJ), 
-  validObjects(OBJ), 
-  validDir(DIR),
-  write('get '), write(OBJ), write(' from '), writeln(DIR).
+  see(normal, DIR, CHAR), 
+  objetos(CHAR), 
+  dir_Valida(DIR),
+  write('get '), write(CHAR), write(' from '), writeln(DIR).
 
 do(use(DIR)) :-
-  see(normal, DIR, Obstacle), 
-  validDir(DIR), 
-  open(Obstacle),
-  write('open '), write(Obstacle), write(' to '), writeln(DIR).
+  havingObject,
+  see(normal, DIR, CHAR), 
+  dir_Valida(DIR), 
+  puertas(CHAR),
+  write('use '), write(CHAR), write(' to '), writeln(DIR).
 
 do(move(DIR)) :- 
-  see(normal, DIR, '.'), 
-  validDir(DIR),
+  coco(DIR), 
+  dir_Valida(DIR),
   write('move '), writeln(DIR).
 
-%TODO =========== Reglas FIN personalizadas por mapa ============
-%TODO vision
-%TODO widevision
-%TODO multivision
-
-
-
-%TODO ========== Fin Reglas FIN personalizadas por mapa =========
+%-----------------Reglas fin personalizadas por mapa-------
+%vision
+%widevision
+%multivision
+do(move(left)).
+%----------------Fin Reglas fin personalizadas por mapa-------
 do(move(none)).

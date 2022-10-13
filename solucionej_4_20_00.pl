@@ -137,8 +137,7 @@ validObjects(CHAR):-
   CHAR = a;
   CHAR = k;
   CHAR = p;
-  CHAR = w;
-  CHAR = '¬'.
+  CHAR = w.
 
 open(Obstacle):-
   havingObject(appearance(a)), Obstacle = '_';
@@ -157,7 +156,92 @@ dropIn(Recipient):-
 %! widevision
 %! multiVision
 
+do(move(left)):-
+  multiVision(
+    '#', '#', '#',
+    '.', ' ', ' ',
+    '.', '.', ' '),
+  writeln('multiVision to left').
 
+do(move(right)):-
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', '.',
+    ' ', 'w', '#');
+  multiVision(
+    ' ', ' ', ' ',
+    '#', ' ', ' ',
+    '.', '.', '.');
+  multiVision(
+    '.', '.', '.',
+    '.', ' ', '.',
+    '.', ' ', ' ');
+  multiVision(
+    ' ', 'E', '.',
+    '.', ' ', '.',
+    '#', '#', '#');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', ' ',
+    ' ', ' ', ' '),
+  writeln('multiVision to right').
+
+do(move(down)):-
+  multiVision(
+    '.', '.', '#',
+    '.', ' ', ' ',
+    '.', '.', '#');
+  multiVision(
+    '.', '.', '.',
+    '.', ' ', ' ',
+    '.', '.', ' ');
+  multiVision(
+    '#', '#', '#',
+    '.', ' ', ' ',
+    '.', '.', ' ');
+  multiVision(
+    '.', ' ', ' ',
+    '.', ' ', ' ',
+    '.', '.', 'E');
+  multiVision(
+    '.', ' ', 'E',
+    '.', ' ', ' ',
+    '.', '.', ' ');
+  multiVision(
+    '.', ' ', ' ',
+    '.', ' ', ' ',
+    '.', '.', ' ');
+  multiVision(
+    '#', '#', '#',
+    'E', ' ', ' ',
+    ' ', ' ', ' ');
+  multiVision(
+    ' ', 'E', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', ' '),
+  writeln('multiVision to down').
+
+do(move(up)):-
+  multiVision(
+    '.', '.', ' ',
+    '.', ' ', ' ',
+    '#', '#', '#');
+  multiVision(
+    '.', '.', 'E',
+    '.', ' ', ' ',
+    '#', '#', '#');
+  multiVision(
+    '.', '.', ' ',
+    '.', ' ', ' ',
+    '.', ' ', ' ');
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', ' '),
+  writeln('multiVision to up').
+
+do(move(left)):-
+  see(normal, left, '.').
 
 %! ======= Fin Reglas INICIO personalizadas por mapa ========
 
@@ -173,6 +257,12 @@ do(use(DIR)) :-
   open(Obstacle),
   write('open '), write(Obstacle), write(' to '), writeln(DIR).
 
+do(drop(DIR)) :-
+  see(normal, DIR, Recipient), 
+  validDir(DIR), 
+  dropIn(Recipient),
+  write('open '), write(Recipient), write(' to '), writeln(DIR).
+
 do(move(DIR)) :- 
   see(normal, DIR, '.'), 
   validDir(DIR),
@@ -183,7 +273,34 @@ do(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
+do(move(left)):-
+  multiVision(
+    '#', ' ', ' ',
+    ' ', ' ', ' ',
+    '#', ' ', ' ');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', '#',
+    ' ', ' ', ' ');
+  multiVision(
+     _ ,  _ ,  _ ,
+    ' ', ' ', 'E',
+    '#', '#', '#'),
+  writeln('multiVision to left').
 
+do(move(up)):-
+  multiVision(
+    ' ', ' ', ' ',
+    'E', ' ', ' ',
+    '#', '#', '#'),
+  writeln('multiVision to up').
+
+do(move(down)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', 'E'),
+  writeln('multiVision to down').
 
 %TODO ========== Fin Reglas FIN personalizadas por mapa =========
 do(move(none)).

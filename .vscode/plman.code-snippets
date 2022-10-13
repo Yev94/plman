@@ -16,16 +16,45 @@
 	// 	"description": "Log output to console"
 	// }
 
-	"multiview": {
+	"notSee": {
 		"scope": "prolog",
-		"prefix": "multiView",
+		"prefix": "no",
 		"body": [
-			"do(move($1)) :-",
-			"  multiView(",
+			"not(see(normal, $1, '${2:#}')),",
+		],
+		"description": "If not see"
+	},
+
+	"doMove": {
+		"scope": "prolog",
+		"prefix": "do",
+		"body": [
+			"do(move($1)).",
+		],
+		"description": "To move"
+	},
+
+	"doMoveNotSee": {
+		"scope": "prolog",
+		"prefix": "dono",
+		"body": [
+			"do(move($1)):-",
+			"  not(see(normal, $1, '${2:#}')),",
+			"  writeln('multiVision to $1')."
+		],
+		"description": "To move if not see"
+	},
+
+	"multiVision": {
+		"scope": "prolog",
+		"prefix": "multiVision",
+		"body": [
+			"do(move($1)):-",
+			"  multiVision(",
 			"    '${2: }', '${3: }', '${4: }',",
 			"    '${5: }', '${10: }', '${6: }',",
 			"    '${7: }', '${8: }', '${9: }'),",
-			"  writeln('multiView to $1')."
+			"  writeln('multiVision to $1')."
 		],
 		"description": "To move watching all enviroment"
 	},
@@ -34,7 +63,7 @@
 		"scope": "prolog",
 		"prefix": "visionLeft",
 		"body": [
-			"do(move($1)) :-",
+			"do(move($1)):-",
 			"  visionLeft(",
 			"    '${2: }', /**//**/",
 			"    '${3: }', '${5: }'/**/,",
@@ -48,7 +77,7 @@
 		"scope": "prolog",
 		"prefix": "visionRight",
 		"body": [
-			"do(move($1)) :-",
+			"do(move($1)):-",
 			"  visionRight(",
 			"    /**//**/'${2: }',",
 			"    /**/'${5: }','${3: }',",
@@ -62,7 +91,7 @@
 		"scope": "prolog",
 		"prefix": "visionUp",
 		"body": [
-			"do(move($1)) :-",
+			"do(move($1)):-",
 			"  visionUp(",
 			"    '${2: }','${3: }','${4: }',",
 			"    /**/'${5: }' /**/",
@@ -71,6 +100,187 @@
 		],
 		"description": "To move watching Up side"
 	},
-//Hacer vision Down
+
+	"visionDown": {
+		"scope": "prolog",
+		"prefix": "visionDown",
+		"body": [
+			"do(move($1)):-",
+			"  visionDown(",
+			"    /**//**//**/",
+			"    /**/'${5: }'/**/,",
+			"    '${2: }','${3: }','${4: }'),",
+			"  writeln('visionDown to $1')."
+		],
+		"description": "To move watching Down side"
+	},
+
+	"visionUpLeft": {
+		"scope": "prolog",
+		"prefix": "visionUpLeft",
+		"body": [
+			"do(move($1)):-",
+			"  visionUpLeft(",
+			"    '${2: }', '${3: }',/**/",
+			"    '${4: }', '${5: }'/**/",
+			"    /**//**//**/),",
+			"  writeln('visionUpLeft to $1')."
+		],
+		"description": "To move watching UpLeft side"
+	},
+
+	"visionUpRight": {
+		"scope": "prolog",
+		"prefix": "visionUpRight",
+		"body": [
+			"do(move($1)):-",
+			"  visionUpRight(",
+			"    /**/'${2: }','${3: }',",
+			"    /**/'${5: }','${4: }'",
+			"    /**//**//**/),",
+			"  writeln('visionUpRight to $1')."
+		],
+		"description": "To move watching UpRight side"
+	},
+
+	"visionDownLeft": {
+		"scope": "prolog",
+		"prefix": "visionDownLeft",
+		"body": [
+			"do(move($1)):-",
+			"  visionDownLeft(",
+			"    /**//**//**/",
+			"    '${4: }','${5: }'/**/,",
+			"    '${2: }','${3: }'/**/),",
+			"  writeln('visionDownLeft to $1')."
+		],
+		"description": "To move watching DownLeft side"
+	},
+
+	"visionDownRight": {
+		"scope": "prolog",
+		"prefix": "visionDownRight",
+		"body": [
+			"do(move($1)):-",
+			"  visionDownRight(",
+			"    /**//**//**/",
+			"    /**/'${5: }','${2: }',",
+			"    /**/'${3: }','${4: }'),",
+			"  writeln('visionDownRight to $1')."
+		],
+		"description": "To move watching DownRight side"
+	},
+
+	"wideVisionLeft": {
+		"scope": "prolog",
+		"prefix": "wideVisionLeft",
+		"body": [
+			"do(move($1)):-",
+			"  wideVisionLeft(",
+			"    '${2: }', '${5: }'/**/,",
+			"    '${3: }', '${7: }'/**/,",
+			"    '${4: }', '${6: }'/**/),",
+			"  writeln('wideVisionLeft to $1')."
+		],
+		"description": "To move watching all Left"
+	},
+
+	"wideVisionRight": {
+		"scope": "prolog",
+		"prefix": "wideVisionRight",
+		"body": [
+			"do(move($1)):-",
+			"  wideVisionRight(",
+			"    /**/'${5: }','${2: }',",
+			"    /**/'${7: }','${3: }',",
+			"    /**/'${6: }','${4: }'),",
+			"  writeln('wideVisionRight to $1')."
+		],
+		"description": "To move watching all Right"
+	},
+
+	"wideVisionUp": {
+		"scope": "prolog",
+		"prefix": "wideVisionUp",
+		"body": [
+			"do(move($1)):-",
+			"  wideVisionUp(",
+			"    '${2: }', '${3: }','${4: }',",
+			"    '${5: }', '${7: }','${6: }'",
+			"    /**//**//**/),",
+			"  writeln('wideVisionUp to $1')."
+		],
+		"description": "To move watching all Up"
+	},
+
+	"wideVisionDown": {
+		"scope": "prolog",
+		"prefix": "wideVisionDown",
+		"body": [
+			"do(move($1)):-",
+			"  wideVisionDown(",
+			"    /**//**//**/",
+			"    '${5: }', '${7: }','${6: }',",
+			"    '${2: }', '${3: }','${4: }'),",
+			"  writeln('wideVisionDown to $1')."
+		],
+		"description": "To move watching all Down"
+	},
+
+	"wideVisionUpLeft": {
+		"scope": "prolog",
+		"prefix": "wideVisionUpLeft",
+		"body": [
+			"do(move($1)):-",
+			"  wideVisionUpLeft(",
+			"    '${2: }', '${3: }','${4: }',",
+			"    '${5: }', '${7: }'/**/,",
+			"    '${6: }' /**//**/),",
+			"  writeln('wideVisionUpLeft to $1')."
+		],
+		"description": "To move watching all UpLeft"
+	},
+
+	"wideVisionUpRight": {
+		"scope": "prolog",
+		"prefix": "wideVisionUpRight",
+		"body": [
+			"do(move($1)):-",
+			"  wideVisionUpRight(",
+			"    '${2: }','${3: }','${4: }',",
+			"    /**/'${7: }','${5: }',",
+			"    /**//**/'${6: }'),",
+			"  writeln('wideVisionUpRight to $1')."
+		],
+		"description": "To move watching all UpRight"
+	},
+
+	"wideVisionDownLeft": {
+		"scope": "prolog",
+		"prefix": "wideVisionDownLeft",
+		"body": [
+			"do(move($1)):-",
+			"  wideVisionDownLeft(",
+			"    '${5: }' /**//**/,",
+			"    '${6: }', '${7: }'/**/,",
+			"    '${2: }', '${3: }','${4: }'),",
+			"  writeln('wideVisionDownLeft to $1')."
+		],
+		"description": "To move watching all DownLeft"
+	},
+
+	"wideVisionDownRight": {
+		"scope": "prolog",
+		"prefix": "wideVisionDownRight",
+		"body": [
+			"do(move($1)):-",
+			"  wideVisionDownRight(",
+			"    /**//**/'${5: }',",
+			"    /**/'${7: }','${6: }',",
+			"    '${2: }','${3: }','${4: }'),",
+			"  writeln('wideVisionDownRight to $1')."
+		],
+		"description": "To move watching all DownRight"
+	},
 
 }

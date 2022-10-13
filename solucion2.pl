@@ -134,32 +134,35 @@ validDir(DIR):-
   DIR = left.
 
 validObjects(CHAR):-
-  CHAR = a;
-  CHAR = k;
   CHAR = p;
-  CHAR = w;
-  CHAR = '¬'.
+  CHAR = a.
 
 open(Obstacle):-
-  havingObject(appearance(a)), Obstacle = '_';
-  havingObject(appearance(a)), Obstacle = '-';
-  havingObject(appearance(a)), Obstacle = '|';
-  havingObject(appearance(k)), Obstacle = '-';
-  havingObject(appearance(k)), Obstacle = '|';
-  havingObject(appearance(p)), Obstacle = '%'.
-
-dropIn(Recipient):-
-  havingObject(appearance(w)), Recipient = 'U'.
+  havingObject(appearance('a')), Obstacle = '_';
+  havingObject(appearance('a')), Obstacle = '|';
+  havingObject(appearance('p')), Obstacle = '%'.
 % Fin definición objetos
 
-%! ========= Reglas INICIO personalizadas por mapa ==========
-%! vision
-%! widevision
-%! multiVision
+%TODO ==========Reglas INICIO personalizadas por mapa==========
+%TODO vision
+%TODO widevision
+%TODO multiVision
 
+do(move(down)):-
+  wideVisionLeft(
+    '#', '#'/**/,
+    '.', ' '/**/,
+    '.', '.'/**/),
+  writeln('wideVisionLeft to down').
 
+do(move(up)):-
+  wideVisionLeft(
+    '.', '.'/**/,
+    '.', ' '/**/,
+    '#', '#'/**/),
+  writeln('wideVisionLeft to up').
 
-%! ======= Fin Reglas INICIO personalizadas por mapa ========
+%TODO ========Fin Reglas INICIO personalizadas por mapa========
 
 do(get(DIR)) :-
   see(normal, DIR, OBJ), 
@@ -178,12 +181,25 @@ do(move(DIR)) :-
   validDir(DIR),
   write('move '), writeln(DIR).
 
-%TODO =========== Reglas FIN personalizadas por mapa ============
-%TODO vision
-%TODO widevision
-%TODO multivision
+%!=============Reglas FIN personalizadas por mapa==============
+%!vision
+%!widevision
+%!multivision
 
+do(move(none)):-
+  visionRight(
+    /**//**/' ',
+    /**/' ','E',
+    /**//**/' '),
+    writeln('visionRight to none').
 
-
-%TODO ========== Fin Reglas FIN personalizadas por mapa =========
+do(move(right)):-
+  visionRight(
+    /**//**/'E',
+    /**/' ',' ',
+    /**//**/' '),
+    writeln('visionRight to right').
+  
+do(move(left)).
+%!==============Fin Reglas FIN personalizadas por mapa=========
 do(move(none)).

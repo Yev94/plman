@@ -134,22 +134,15 @@ validDir(DIR):-
   DIR = left.
 
 validObjects(CHAR):-
-  CHAR = a;
+  % CHAR = p;
   CHAR = k;
-  CHAR = p;
-  CHAR = w;
-  CHAR = '¬'.
+  CHAR = a.
 
 open(Obstacle):-
   havingObject(appearance(a)), Obstacle = '_';
-  havingObject(appearance(a)), Obstacle = '-';
   havingObject(appearance(a)), Obstacle = '|';
   havingObject(appearance(k)), Obstacle = '-';
-  havingObject(appearance(k)), Obstacle = '|';
   havingObject(appearance(p)), Obstacle = '%'.
-
-dropIn(Recipient):-
-  havingObject(appearance(w)), Recipient = 'U'.
 % Fin definición objetos
 
 %! ========= Reglas INICIO personalizadas por mapa ==========
@@ -183,7 +176,28 @@ do(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
+do(move(none)):-
+  multiVision(
+    'n', '#', '#',
+    ' ', ' ', '#',
+    '#', '#', '#'),
+  writeln('multiVision to none').
 
+do(move(left)):-
+  multiVision(
+    ' ', '#', '#',
+    ' ', ' ', '#',
+    '#', '#', '#'),
+  writeln('multiVision to left').
+
+do(move(up)):-
+  multiVision(
+    'e', ' ', '#',
+    ' ', ' ', ' ',
+    '#', '#', '#'),
+  writeln('multiVision to up').
+
+do(move(right)).
 
 %TODO ========== Fin Reglas FIN personalizadas por mapa =========
 do(move(none)).

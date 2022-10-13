@@ -134,22 +134,15 @@ validDir(DIR):-
   DIR = left.
 
 validObjects(CHAR):-
-  CHAR = a;
-  CHAR = k;
   CHAR = p;
-  CHAR = w;
-  CHAR = '¬'.
+  CHAR = k;
+  CHAR = a.
 
 open(Obstacle):-
   havingObject(appearance(a)), Obstacle = '_';
-  havingObject(appearance(a)), Obstacle = '-';
   havingObject(appearance(a)), Obstacle = '|';
   havingObject(appearance(k)), Obstacle = '-';
-  havingObject(appearance(k)), Obstacle = '|';
   havingObject(appearance(p)), Obstacle = '%'.
-
-dropIn(Recipient):-
-  havingObject(appearance(w)), Recipient = 'U'.
 % Fin definición objetos
 
 %! ========= Reglas INICIO personalizadas por mapa ==========
@@ -157,7 +150,40 @@ dropIn(Recipient):-
 %! widevision
 %! multiVision
 
+do(move(down)):-
+  multiVision(
+    '#', '.', '#',
+    '#', ' ', '#',
+    '#', '.', '#'),
+  writeln('multiVision to down').
 
+do(move(down)):-
+  multiVision(
+    ' ', ' ', ' ',
+    '#', ' ', '#',
+    ' ', ' ', '.'),
+  writeln('multiVision to down').
+
+do(move(down)):-
+  multiVision(
+    ' ', ' ', '.',
+    '#', ' ', '#',
+    ' ', ' ', '.'),
+  writeln('multiVision to down').
+
+do(move(down)):-
+  multiVision(
+    '.', '.', '.',
+    '#', ' ', '#',
+    ' ', ' ', '.'),
+  writeln('multiVision to down').
+
+do(move(left)):-
+  multiVision(
+    '#', '.', '#',
+    '.', ' ', '#',
+    '#', ' ', '#'),
+  writeln('multiVision to left').
 
 %! ======= Fin Reglas INICIO personalizadas por mapa ========
 
@@ -183,7 +209,79 @@ do(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
+do(move(up)):-
+  multiVision(
+    '#', ' ', '#',
+    '#', ' ',  2 ,
+    '#', ' ', '#'),
+  writeln('multiVision to up').
 
+do(move(none)):-
+  see(normal, left, '0');
+  see(normal, left, 1);
+  see(normal, left, 2);
+  see(normal, left, 3);
+  see(normal, left, 4);
+  see(normal, left, 5);
+  see(normal, left, 6);
+  see(normal, left, 7),
+  writeln('multiVision to none').
+
+do(move(none)):-
+  see(normal, right, '0');
+  see(normal, right, 1);
+  see(normal, right, 2);
+  see(normal, right, 3);
+  see(normal, right, 4);
+  see(normal, right, 5);
+  see(normal, right, 6);
+  see(normal, right, 7),
+  writeln('multiVision to none').
+
+
+do(move(up)):-
+  multiVision(
+    '#', ' ',  2,
+    '#', ' ', '#',
+    '#', ' ', ' '),
+  writeln('multiVision to up').
+
+do(move(up)):-
+  multiVision(
+    '#', ' ', ' ',
+    '#', ' ', '#',
+    '#', ' ',  1),
+  writeln('multiVision to up').
+
+do(move(up)):-
+  multiVision(
+    ' ', ' ', ' ',
+    '#', ' ', '#',
+     1, '#', '#'),
+  writeln('multiVision to up').
+
+do(move(up)):-
+  multiVision(
+    ' ', ' ', ' ',
+    '#', ' ', '#',
+    '#', ' ', '#'),
+  writeln('multiVision to up').
+
+do(move(up)):-
+  multiVision(
+    '#', ' ', ' ',
+    '#', ' ', '#',
+    '#', ' ',  3),
+  writeln('multiVision to up').
+
+do(move(up)):-
+  multiVision(
+    ' ', ' ', ' ',
+    '#', ' ', '#',
+     3 , '#', '#'),
+  writeln('multiVision to up').
+
+do(move(right)).
 
 %TODO ========== Fin Reglas FIN personalizadas por mapa =========
 do(move(none)).
