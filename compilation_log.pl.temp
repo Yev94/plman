@@ -1,0 +1,8 @@
+Warning: /home/ubuntu/Documents/plman/solucion0.pl:196:
+Warning:    Clauses of doWithObject/2 are not together in the source-file
+Warning:    Earlier definition at /home/ubuntu/Documents/plman/solucion0.pl:194
+Warning:    Current predicate: doWithoutObject/2
+Warning:    Use :- discontiguous doWithObject/2. to suppress this message
+% Disabled autoloading (loaded 34 files)
+% Disabled autoloading (loaded 4 files)
+% Disabled autoloading (loaded 0 files)
