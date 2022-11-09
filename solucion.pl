@@ -155,7 +155,7 @@ dropIn(Recipient):-
 % Fin definición objetos
 
 
-%? ========= Reglas INICIO personalizadas por mapa ==========
+%? ========= Reglas INICIO personalizadas por Objeto =========
 %* --------- inicio Reglas INICIO Personalizadas ---------
 %* doact
 
@@ -174,9 +174,9 @@ do(ACT) :- doit(ACT). %==================================
 
 %* --------- fin Reglas FIN Personalizadas --------------
 do(ACT) :- donone(ACT). %=================================
-%? ====== Fin Reglas INICIO personalizadas por mapa =======
+%? ====== Fin Reglas INICIO personalizadas por Objeto ========
 
-%! ========= Reglas INICIO personalizadas por mapa ==========
+%! ======= SubReglas INICIO personalizadas por mapa ==========
 %! vision
 %! widevision
 %! multiVision
@@ -185,7 +185,7 @@ do(ACT) :- donone(ACT). %=================================
 
 
 
-%! ======= Fin Reglas INICIO personalizadas por mapa ========
+%! ===== Fin SubReglas INICIO personalizadas por mapa ========
 
 doit(get(DIR)) :-
   see(normal, DIR, OBJ), 
@@ -204,7 +204,7 @@ doit(move(DIR)) :-
   validDir(DIR),
   write('move '), writeln(DIR).
 
-%TODO ======= Reglas FIN personalizadas por mapa ============
+%TODO ===== SubReglas FIN personalizadas por mapa ============
 %TODO vision
 %TODO widevision
 %TODO multivision
@@ -213,5 +213,5 @@ doit(move(DIR)) :-
 
 
 
-%TODO ======= Fin Reglas FIN personalizadas por mapa =========
+%TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).

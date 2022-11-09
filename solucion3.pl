@@ -160,6 +160,9 @@ dropIn(Recipient):-
 %* doact
 
 
+do(ACT) :-
+  not(havingObject(appearance(_))),
+  r1(ACT).
 
 
 %* --------- fin Reglas INICIO Personalizadas -----------
@@ -168,13 +171,8 @@ do(ACT) :- doit(ACT). %==================================
 %* doact
 
 
-do(ACT) :-
-  not(havingObject(appearance(_))),
-  r1(ACT).
 
-do(ACT) :-
-  (havingObject(appearance(a))),
-  r2(ACT).
+
 
 %* --------- fin Reglas FIN Personalizadas --------------
 do(ACT) :- donone(ACT). %=================================
@@ -185,7 +183,14 @@ do(ACT) :- donone(ACT). %=================================
 %! widevision
 %! multiVision
 
-
+r1(get(down)):-
+  visionDown(
+    /**//**//**/
+    /**/' '/**/,
+      X,'+', Y),
+    Z is X + Y,
+  writeln(Z),
+  writeln(' r1 visionDown to none').
 
 
 
@@ -214,11 +219,8 @@ doit(move(DIR)) :-
 %TODO multivision
 
 
-r1(move(right)):-
-  see(normal, right, ' ').
 
-r2(move(left)):-
-  see(normal, left, ' ').
+
 
 %TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).

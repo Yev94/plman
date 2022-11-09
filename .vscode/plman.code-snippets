@@ -34,7 +34,7 @@
 		"prefix": "doif",
 		"body": [
 			"r$1(move($2)):-",
-			"\tsee(normal, $2, '${3:#}'),",
+			"\tsee(normal, $2, '${3:#}').",
 		],
 		"description": "move if see"
 	},
@@ -44,7 +44,7 @@
 		"prefix": "doifnot",
 		"body": [
 			"r$1(move($2)):-",
-			"\tnot(see(normal, $2, '${3:#}')),",
+			"\tnot(see(normal, $2, '${3:#}')).",
 		],
 		"description": "move if see"
 	},
@@ -58,18 +58,18 @@
 		"description": "If not see"
 	},
 
-	"doMove": {
+	"rMove": {
 		"scope": "prolog",
-		"prefix": "do",
+		"prefix": "r",
 		"body": [
 			"r$1(move($2)).",
 		],
 		"description": "To move"
 	},
 
-	"doMoveNotSee": {
+	"rMoveNotSee": {
 		"scope": "prolog",
-		"prefix": "dono",
+		"prefix": "rno",
 		"body": [
 			"r$1(move($2)):-",
 			"  not(see(normal, $2, '${3:#}')),",
@@ -85,8 +85,8 @@
 			"r$1(move($2)):-",
 			"  multiVision(",
 			"    '${3: }', '${4: }', '${5: }',",
-			"    '${6: }', '${10: }', '${7: }',",
-			"    '${8: }', '${8: }', '${9: }'),",
+			"    '${6: }', '${11: }', '${7: }',",
+			"    '${8: }', '${9: }', '${10: }'),",
 			"  writeln('r$1 multiVision to $2')."
 		],
 		"description": "To move watching all enviroment"

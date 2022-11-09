@@ -148,7 +148,8 @@ open(Obstacle):-
   havingObject(appearance(k)), Obstacle = '-';
   havingObject(appearance(k)), Obstacle = '|';
   havingObject(appearance(o)), Obstacle = '|';
-  havingObject(appearance(p)), Obstacle = '%'.
+  havingObject(appearance(p)), Obstacle = '%';
+  havingObject(appearance(r)), Obstacle = '|'.
 
 dropIn(Recipient):-
   havingObject(appearance(w)), Recipient = 'U'.
@@ -159,8 +160,17 @@ dropIn(Recipient):-
 %* --------- inicio Reglas INICIO Personalizadas ---------
 %* doact
 
+do(ACT) :-
+  (havingObject(appearance(a))),
+  r3(ACT).
 
+do(ACT) :-
+  not(havingObject(appearance(a))),
+  r4(ACT).
 
+do(ACT) :-
+  (havingObject(appearance(r))),
+  r5(ACT).
 
 %* --------- fin Reglas INICIO Personalizadas -----------
 do(ACT) :- doit(ACT). %==================================
@@ -185,9 +195,41 @@ do(ACT) :- donone(ACT). %=================================
 %! widevision
 %! multiVision
 
+r3(drop(left)):-
+  see(normal, up, r).
 
+r4(get(up)):-
+  see(normal, up, r).
 
+r5(move(left)):-
+  multiVision(
+    '#', ' ', '#',
+    'a', ' ', '#',
+    '#', '#', '#');
+  multiVision(
+    '#', '#', ' ',
+    ' ', 'a', ' ',
+    '#', '#', '#');
+  multiVision(
+    '#', '#', ' ',
+    ' ', 'a', ' ',
+    '#', '#', '#');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', 'a',
+    '#', '#', '#');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', ' ',
+    '#', '#', '#');
+  multiVision(
+    ' ', '#', '#',
+    ' ', ' ', ' ',
+    '#', '#', '#'),
+  writeln('r5 multiVision to left').
 
+r5(move(up)):-
+  see(normal, up, ' ').
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========
 
@@ -215,10 +257,24 @@ doit(move(DIR)) :-
 
 
 r1(move(right)):-
+  see(normal, right, ' '),
+  see(normal, down, '#').
+
+r1(move(up)):-
+  see(normal, right, '#');
   see(normal, right, ' ').
 
 r2(move(left)):-
-  see(normal, left, ' ').
+  see(normal, left, ' '),
+  see(normal, down, ' ').
+
+r2(move(down)):-
+  see(normal, left, '#'),
+  see(normal, down, ' ').
+
+r2(move(right)):-
+  see(normal, right, ' '),
+  see(normal, down, '#').
 
 %TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).
