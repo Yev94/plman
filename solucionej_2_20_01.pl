@@ -134,6 +134,7 @@ validDir(DIR):-
 
 validObjects(CHAR):-
   CHAR = a;
+  CHAR = b;
   CHAR = k;
   CHAR = o;
   CHAR = p;
@@ -153,7 +154,8 @@ open(Obstacle):-
   
   
 dropIn(Recipient):-
-  havingObject(appearance(w)), Recipient = 'U'.
+  havingObject(appearance(b)), Recipient = 'U';
+  havingObject(appearance(a)), Recipient = 'U'.
   
 validSpellingObjects(Obstacle, Spell):-
   havingObject(appearance('!')), 
@@ -169,13 +171,26 @@ validSpellingObjects(Obstacle, Spell):-
 %* --------- inicio Reglas INICIO Personalizadas ---------
 %* doact
 
+do(ACT) :-
+  not(havingObject(appearance(b))),
+  r1(ACT).
 
+do(ACT) :-
+  not(havingObject(appearance(a))),
+  r3(ACT).
 
 %* --------- fin Reglas INICIO Personalizadas -----------
 do(ACT) :- doit(ACT). %==================================
 %* --------- inicio Reglas FIN Personalizadas -----------
 %* doact
 
+do(ACT) :-
+  (havingObject(appearance(a))),
+  r2(ACT).
+
+do(ACT) :-
+  not(havingObject(appearance(a))),
+  r4(ACT).
 
 
 %* --------- fin Reglas FIN Personalizadas --------------
@@ -187,6 +202,19 @@ do(ACT) :- donone(ACT). %=================================
 %! widevision
 %! multiVision
 
+r1(move(right)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', '.',
+    ' ', 'b', ' '),
+  writeln('r1 multiVision to right').
+
+r3(move(none)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    ' ', 'a', ' '),
+  writeln('r3 multiVision to none').
 
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========
@@ -213,7 +241,9 @@ doit(use(Spell, DIR)) :-
   see(normal, DIR, Obstacle), 
   validDir(DIR), 
   validSpellingObjects(Obstacle, Spell),
-  write('open '), write(Obstacle), write(' to '), write(DIR), write(' spelling '), writeln(Spell).
+  write('Drop '), write(Obstacle).
+
+
 
 doit(move(DIR)) :- 
   see(normal, DIR, '.'), 
@@ -225,6 +255,30 @@ doit(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
+r2(move(left)):-
+  wideVisionLeft(
+    ' ', ' '/**/,
+    ' ', ' '/**/,
+    ' ', ' '/**/);
+  wideVisionLeft(
+    ' ', ' '/**/,
+    ' ', ' '/**/,
+    'U', ' '/**/),
+  writeln('r2 wideVisionLeft to left').
+
+r4(move(down)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', ' ');
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    '#', ' ', '#'),
+  writeln('r4 multiVision to down').
+
+r4(move(right)):-
+  not(see(normal, right, '#')).
 
 %TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).

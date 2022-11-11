@@ -187,12 +187,17 @@ r1(get(down)):-
   visionDown(
     /**//**//**/
     /**/' '/**/,
-      X,'+', Y),
-    Z is X + Y,
-  writeln(Z),
-  writeln(' r1 visionDown to none').
+     X ,'+', Y),
+    X + Y > 10,
+  writeln('r1 visionDown to none').
 
-
+r1(get(up)):-
+  visionUp(
+      X,'+', Y,
+    /**/' ' /**/
+    /**//**//**/),
+    X + Y > 10,
+  writeln('r1 visionUp to none').
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========
 

@@ -147,7 +147,6 @@ open(Obstacle):-
   havingObject(appearance(a)), Obstacle = '|';
   havingObject(appearance(k)), Obstacle = '-';
   havingObject(appearance(k)), Obstacle = '|';
-  havingObject(appearance(l)), Obstacle = '-';
   havingObject(appearance(o)), Obstacle = '|';
   havingObject(appearance(p)), Obstacle = '%'.
   
@@ -155,13 +154,13 @@ open(Obstacle):-
 dropIn(Recipient):-
   havingObject(appearance(w)), Recipient = 'U'.
   
-validSpellingObjects(Obstacle, Spell):-
-  havingObject(appearance('!')), 
-    Obstacle = '|', Spell = 'aLoHoM0rA';
-  havingObject(appearance('!')), 
-    Obstacle = '%', Spell = 'flIpEnDO';
-  havingObject(appearance('!')), 
-    Obstacle = 'E', Spell = 'aV4dA_keDaVra'.
+validSpellingObjects(Obstacle):-
+  havingObject(appearance('!')), Obstacle = '|';
+  havingObject(appearance('!')), Obstacle = '¡'.
+
+
+spell0(Prompt):-
+  Prompt = 'aPAreC1uM'.
 % Fin definición objetos
 
 
@@ -170,11 +169,16 @@ validSpellingObjects(Obstacle, Spell):-
 %* doact
 
 
+do(ACT) :-
+  (havingObject(appearance(_))),
+  r1(ACT).
 
 %* --------- fin Reglas INICIO Personalizadas -----------
 do(ACT) :- doit(ACT). %==================================
 %* --------- inicio Reglas FIN Personalizadas -----------
 %* doact
+
+
 
 
 
@@ -187,7 +191,20 @@ do(ACT) :- donone(ACT). %=================================
 %! widevision
 %! multiVision
 
+r1(move(none)):-
+  multiVision(
+    '#', '#', 'v',
+    ' ', ' ', '¡',
+    '#', '.', '.'),
+  writeln('r1 multiVision to none').
 
+r1(use(Spell, right)):-
+  multiVision(
+    '#', '#', '¡',
+    ' ', ' ', ' ',
+    '#', '.', '¡'),
+  spell0(Spell),
+  writeln('r multiVision to ').
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========
 
@@ -203,16 +220,11 @@ doit(use(DIR)) :-
   open(Obstacle),
   write('open '), write(Obstacle), write(' to '), writeln(DIR).
 
-doit(drop(DIR)) :-
-  see(normal, DIR, OBJ),
-  validDir(DIR),
-  dropIn(OBJ),
-  write('DROP into'), write(OBJ), write(' '), writeln(DIR).
-
 doit(use(Spell, DIR)) :-
   see(normal, DIR, Obstacle), 
   validDir(DIR), 
-  validSpellingObjects(Obstacle, Spell),
+  validSpellingObjects(Obstacle),
+  spell0(Spell),
   write('open '), write(Obstacle), write(' to '), write(DIR), write(' spelling '), writeln(Spell).
 
 doit(move(DIR)) :- 
@@ -224,7 +236,6 @@ doit(move(DIR)) :-
 %TODO vision
 %TODO widevision
 %TODO multivision
-
 
 %TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).

@@ -147,7 +147,6 @@ open(Obstacle):-
   havingObject(appearance(a)), Obstacle = '|';
   havingObject(appearance(k)), Obstacle = '-';
   havingObject(appearance(k)), Obstacle = '|';
-  havingObject(appearance(l)), Obstacle = '-';
   havingObject(appearance(o)), Obstacle = '|';
   havingObject(appearance(p)), Obstacle = '%'.
   
@@ -158,10 +157,10 @@ dropIn(Recipient):-
 validSpellingObjects(Obstacle, Spell):-
   havingObject(appearance('!')), 
     Obstacle = '|', Spell = 'aLoHoM0rA';
-  havingObject(appearance('!')), 
     Obstacle = '%', Spell = 'flIpEnDO';
-  havingObject(appearance('!')), 
     Obstacle = 'E', Spell = 'aV4dA_keDaVra'.
+
+
 % Fin definición objetos
 
 
@@ -202,12 +201,6 @@ doit(use(DIR)) :-
   validDir(DIR), 
   open(Obstacle),
   write('open '), write(Obstacle), write(' to '), writeln(DIR).
-
-doit(drop(DIR)) :-
-  see(normal, DIR, OBJ),
-  validDir(DIR),
-  dropIn(OBJ),
-  write('DROP into'), write(OBJ), write(' '), writeln(DIR).
 
 doit(use(Spell, DIR)) :-
   see(normal, DIR, Obstacle), 

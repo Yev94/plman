@@ -147,7 +147,6 @@ open(Obstacle):-
   havingObject(appearance(a)), Obstacle = '|';
   havingObject(appearance(k)), Obstacle = '-';
   havingObject(appearance(k)), Obstacle = '|';
-  havingObject(appearance(l)), Obstacle = '-';
   havingObject(appearance(o)), Obstacle = '|';
   havingObject(appearance(p)), Obstacle = '%'.
   
@@ -155,13 +154,13 @@ open(Obstacle):-
 dropIn(Recipient):-
   havingObject(appearance(w)), Recipient = 'U'.
   
-validSpellingObjects(Obstacle, Spell):-
-  havingObject(appearance('!')), 
-    Obstacle = '|', Spell = 'aLoHoM0rA';
-  havingObject(appearance('!')), 
-    Obstacle = '%', Spell = 'flIpEnDO';
-  havingObject(appearance('!')), 
-    Obstacle = 'E', Spell = 'aV4dA_keDaVra'.
+validSpellingObjects(Obstacle):-
+  havingObject(appearance('!')), Obstacle = '%';
+  havingObject(appearance('!')), Obstacle = '|'.
+
+
+spell0(Prompt):-
+  Prompt = 'aLoHoM0rA'.
 % Fin definición objetos
 
 
@@ -177,6 +176,15 @@ do(ACT) :- doit(ACT). %==================================
 %* doact
 
 
+do(ACT) :-
+  not(havingObject(appearance(_))),
+  r1(ACT).
+
+do(ACT) :-
+  (havingObject(appearance(_))),
+  r2(ACT).
+
+
 
 %* --------- fin Reglas FIN Personalizadas --------------
 do(ACT) :- donone(ACT). %=================================
@@ -186,8 +194,6 @@ do(ACT) :- donone(ACT). %=================================
 %! vision
 %! widevision
 %! multiVision
-
-
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========
 
@@ -203,16 +209,11 @@ doit(use(DIR)) :-
   open(Obstacle),
   write('open '), write(Obstacle), write(' to '), writeln(DIR).
 
-doit(drop(DIR)) :-
-  see(normal, DIR, OBJ),
-  validDir(DIR),
-  dropIn(OBJ),
-  write('DROP into'), write(OBJ), write(' '), writeln(DIR).
-
 doit(use(Spell, DIR)) :-
   see(normal, DIR, Obstacle), 
   validDir(DIR), 
-  validSpellingObjects(Obstacle, Spell),
+  validSpellingObjects(Obstacle),
+  spell0(Spell),
   write('open '), write(Obstacle), write(' to '), write(DIR), write(' spelling '), writeln(Spell).
 
 doit(move(DIR)) :- 
@@ -225,6 +226,42 @@ doit(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
+r1(move(left)):-
+  see(normal, left, ' '),
+  writeln('r1 multiVision to left').
+
+r1(move(up)):-
+  see(normal, up, ' '),
+  writeln('r1 multiVision to up').
+
+r2(move(down)):-
+  see(normal, down, ' '),
+  writeln('r2 multiVision to down').
+
+r2(move(right)):-
+  see(normal, right, ' '),
+  see(normal, up, ' '),
+  see(normal, left, '#'),
+  writeln('r1 multiVision to down').
+
+r2(move(right)):-
+  see(normal, up, '#'),
+  writeln('r2 multiVision to down').
+
+
+r2(move(up)):-
+  multiVision(
+    '#', ' ', '#',
+    ' ', ' ', ' ',
+    '#', '#', '#'),
+  writeln('r2 multiVision to up').
+
+r2(move(right)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    '#', '#', ' '),
+  writeln('r2 multiVision to right').
 
 %TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).
