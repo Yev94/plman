@@ -169,6 +169,9 @@ validSpellingObjects(Obstacle, Spell):-
 %* --------- inicio Reglas INICIO Personalizadas ---------
 %* doact
 
+do(ACT) :-
+  (havingObject(appearance('¬'))),
+  r1(ACT).
 
 
 %* --------- fin Reglas INICIO Personalizadas -----------
@@ -177,6 +180,17 @@ do(ACT) :- doit(ACT). %==================================
 %* doact
 
 
+do(ACT) :-
+  (havingObject(appearance('U'))),
+  r2(ACT).
+
+do(ACT) :-
+  not(havingObject(appearance('U'))),
+  r3(ACT).
+
+do(ACT) :-
+  (havingObject(appearance('U'))),
+  r4(ACT).
 
 %* --------- fin Reglas FIN Personalizadas --------------
 do(ACT) :- donone(ACT). %=================================
@@ -187,6 +201,12 @@ do(ACT) :- donone(ACT). %=================================
 %! widevision
 %! multiVision
 
+r1(drop(left)):-
+  multiVision(
+    '#', '#', '#',
+    'U', ' ', '.',
+    ' ', ' ', '.'),
+  writeln('r1 multiVision to left').
 
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========
@@ -225,6 +245,34 @@ doit(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
+r2(drop(up)):-
+  multiVision(
+    ' ', 'c', '#',
+    'E', ' ', '#',
+    ' ', ' ', '#'),
+  writeln('r1 multiVision to down').
+
+r3(get(up)):-
+  multiVision(
+    'E', 'U', '#',
+    ' ', ' ', '#',
+    ' ', ' ', '#'),
+  writeln('r3 multiVision to up').
+
+r4(move(down)):-
+  multiVision(
+    'E', ' ', '#',
+    ' ', ' ', '#',
+    ' ', ' ', '#');
+  multiVision(
+    'E', ' ', '#',
+    ' ', ' ', '#',
+    ' ', '.', '#');
+  multiVision(
+    ' ', ' ', '#',
+    '.', ' ', '#',
+    '.', '.', '#'),
+  writeln('r4down multiVision to down').
 
 %TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).
