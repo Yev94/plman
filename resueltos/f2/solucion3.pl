@@ -196,7 +196,7 @@ r1(get(up)):-
       X,'+', Y,
     /**/' ' /**/
     /**//**//**/),
-    X + Y > 10,
+    X + Y > 9,
   writeln('r1 visionUp to none').
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========

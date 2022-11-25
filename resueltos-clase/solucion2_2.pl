@@ -176,7 +176,13 @@ do(ACT) :- doit(ACT). %==================================
 %* --------- inicio Reglas FIN Personalizadas -----------
 %* doact
 
+do(ACT) :-
+  not(havingObject(appearance(_))),
+  r1(ACT).
 
+do(ACT) :-
+  (havingObject(appearance('&'))),
+  r2(ACT).
 
 %* --------- fin Reglas FIN Personalizadas --------------
 do(ACT) :- donone(ACT). %=================================
@@ -225,6 +231,92 @@ doit(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
+r1(move(down)):-
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', '#',
+    ' ', ' ', '#');
+  multiVision(
+    ' ', ' ', '#',
+    ' ', ' ', '#',
+    ' ', ' ', '#'),
+  writeln('r1 multiVision to down').
 
+r1(move(left)):-
+  multiVision(
+    ' ', ' ', '#',
+    ' ', ' ', '#',
+    '#', '#', '#');
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    '#', '#', '#');
+  multiVision(
+    '&', 'E', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', ' '),
+  writeln('r1 multiVision to left').
+
+r1(move(up)):-
+  multiVision(
+    'E', ' ', ' ',
+    ' ', ' ', ' ',
+    '#', '#', '#');
+  multiVision(
+    ' ', '&', ' ',
+    ' ', ' ', 'E',
+    ' ', ' ', ' '),
+  writeln('r1 multiVision to up').
+
+r1(move(left)):-
+  multiVision(
+    'E', ' ', ' ',
+    ' ', '&', 'E',
+    ' ', 'E', ' '),
+  writeln('r1 multiVision to left').
+
+r1(get(right)):-
+  multiVision(
+    'E', ' ', 'E',
+    ' ', ' ', '&',
+    ' ', 'E', ' '),
+  writeln('r1 multiVision to ').
+
+r2(move(left)):-
+  multiVision(
+    'E', ' ', 'E',
+    ' ', ' ', ' ',
+    ' ', 'E', ' ');
+  multiVision(
+    ' ', ' ', 'E',
+    ' ', ' ', ' ',
+    ' ', 'E', ' ');
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', 'E',
+    ' ', ' ', ' ');
+  multiVision(
+    '#', ' ', ' ',
+    ' ', ' ', ' ',
+    '#', ' ', ' '),
+  writeln('r2 multiVision to left').
+
+r2(move(up)):-
+  multiVision(
+    '#', ' ', ' ',
+    '#', ' ', ' ',
+    '#', ' ', ' ');
+  multiVision(
+    ']', ' ', ' ',
+    '#', ' ', ' ',
+    '#', ' ', ' '),
+  writeln('r2 multiVision to up').
+
+r2(use(left)):-
+  multiVision(
+    '#', ' ', ' ',
+    ']', ' ', ' ',
+    '#', ' ', ' '),
+  writeln('r2 multiVision to ').
 %TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).

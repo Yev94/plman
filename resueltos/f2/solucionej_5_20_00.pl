@@ -157,6 +157,8 @@ dropIn(Recipient):-
   
 validSpellingObjects(Obstacle, Spell):-
   havingObject(appearance('!')), 
+    Obstacle = '-', Spell = 'aLoHoM0rA';
+  havingObject(appearance('!')), 
     Obstacle = '|', Spell = 'aLoHoM0rA';
   havingObject(appearance('!')), 
     Obstacle = '%', Spell = 'flIpEnDO';
@@ -169,14 +171,26 @@ validSpellingObjects(Obstacle, Spell):-
 %* --------- inicio Reglas INICIO Personalizadas ---------
 %* doact
 
-
+do(ACT) :-
+  not(havingObject(appearance(_))),
+  r3(ACT).
 
 %* --------- fin Reglas INICIO Personalizadas -----------
 do(ACT) :- doit(ACT). %==================================
 %* --------- inicio Reglas FIN Personalizadas -----------
 %* doact
 
+do(ACT) :-
+  not(havingObject(appearance(_))),
+  r1(ACT).
 
+do(ACT) :-
+  (havingObject(appearance('!'))),
+  r2(ACT).
+
+do(ACT) :-
+  not(havingObject(appearance(_))),
+  r4(ACT).
 
 %* --------- fin Reglas FIN Personalizadas --------------
 do(ACT) :- donone(ACT). %=================================
@@ -187,7 +201,12 @@ do(ACT) :- donone(ACT). %=================================
 %! widevision
 %! multiVision
 
-
+r3(move(left)):-
+  multiVision(
+    ' ', '#', '#',
+    ' ', ' ', '!',
+    ' ', ' ', ' '),
+  writeln('r3 multiVision to left').
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========
 
@@ -209,11 +228,11 @@ doit(drop(DIR)) :-
   dropIn(OBJ),
   write('DROP into'), write(OBJ), write(' '), writeln(DIR).
 
-doit(use(Spell, DIR)) :-
-  see(normal, DIR, Obstacle), 
-  validDir(DIR), 
-  validSpellingObjects(Obstacle, Spell),
-  write('open '), write(Obstacle), write(' to '), write(DIR), write(' spelling '), writeln(Spell).
+% doit(use(Spell, DIR)) :-
+%   see(normal, DIR, Obstacle), 
+%   validDir(DIR), 
+%   validSpellingObjects(Obstacle, Spell),
+%   write('open '), write(Obstacle), write(' to '), write(DIR), write(' spelling '), writeln(Spell).
 
 doit(move(DIR)) :- 
   see(normal, DIR, '.'), 
@@ -225,6 +244,174 @@ doit(move(DIR)) :-
 %TODO widevision
 %TODO multivision
 
+r1(move(down)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', ' ');
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', '.'),
+  writeln('r1 multiVision to down').
+
+r2(move(down)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', ' ');
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    ' ', ' ', '.');
+  multiVision(
+    '#', '#', '#',
+    '#', ' ', ' ',
+    '#', ' ', '#');
+  multiVision(
+    '#', ' ', ' ',
+    '#', ' ', '#',
+    '#', ' ', '#');
+  multiVision(
+    '#', ' ', '#',
+    '#', ' ', '#',
+    '#', ' ', '#'),
+  writeln('r2 multiVision to up').
+
+r2(move(right)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    '#', '#', '#');
+  multiVision(
+    ' ', ' ', 'E',
+    ' ', ' ', ' ',
+    ' ', ' ', ' ');
+  multiVision(
+    ' ', ' ', '.',
+    ' ', ' ', ' ',
+    '#', '#', '#'),
+  writeln('r2 multiVision to right').
+
+r2(move(none)):-
+  multiVision(
+    ' ', ' ', ' ',
+    ' ', ' ', ' ',
+    'E', ' ', ' '),
+  writeln('r2 multiVision to none').
+
+r2(move(up)):-
+  multiVision(
+    ' ', ' ', '#',
+    ' ', ' ', '#',
+    '#', '#', '#');
+  multiVision(
+    ' ', ' ', '#',
+    ' ', ' ', '#',
+    ' ', ' ', '#');
+  multiVision(
+    '#', ' ', '#',
+    ' ', ' ', ' ',
+    ' ', ' ', ' '),
+  writeln('r2 multiVision to up').
+
+r2(move(left)):-
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', '#',
+    ' ', ' ', '#');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', ' ',
+    ' ', ' ', ' ');
+  multiVision(
+    '-', '#', '#',
+    ' ', ' ', ' ',
+    ' ', ' ', ' ');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', ' ',
+    ' ', '#', '#'),
+  writeln('r2 multiVision to left').
+
+r2(use(Spell, up)):-
+  multiVision(
+    '#', '-', '#',
+    ' ', ' ', ' ',
+    ' ', ' ', ' '),
+  validSpellingObjects('-', Spell),
+  writeln('r2 multiVision to ').
+
+r2(use(Spell, right)):-
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', '|',
+    ' ', ' ', ' '),
+  validSpellingObjects('|', Spell),
+  writeln('r2 multiVision to ').
+
+r2(use('aV4dA_keDaVra', down)):-
+  multiVision(
+    '#', ' ', '#',
+    '#', ' ', '#',
+    '#', 'E', '#'),
+  writeln('r2 multiVision to ').
+
+r2(move(left)):-
+  multiVision(
+    ' ', '#', '#',
+    ' ', ' ', ' ',
+    '.', ' ', ' '),
+  writeln('r2 multiVision to left').
+
+r2(drop(right)):-
+  multiVision(
+    ' ', '#', '#',
+    ' ', ' ', ' ',
+    ' ', ' ', ' '),
+  writeln('r2 multiVision to right').
+
+r4(move(up)):-
+  multiVision(
+    '#', ' ', '#',
+    '#', ' ', ' ',
+    '#', ' ', ' ');
+  multiVision(
+    '#', ' ', '#',
+    '#', ' ', '#',
+    '#', ' ', ' ');
+  multiVision(
+    '#', ' ', '#',
+    '#', ' ', '#',
+    '#', ' ', '#');
+  multiVision(
+    '#', ' ', ' ',
+    '#', ' ', '#',
+    '#', ' ', '#'),
+  writeln('r4 multiVision to up').
+
+r4(move(right)):-
+  multiVision(
+    '#', '#', '#',
+    '#', ' ', ' ',
+    '#', ' ', '#');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', ' ',
+    ' ', '#', '#');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', ' ',
+    '#', '#', '#');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', ' ',
+    '#', '#', ' ');
+  multiVision(
+    '#', '#', '#',
+    ' ', ' ', ' ',
+    '#', ' ', '#'),
+  writeln('r4 multiVision to right').
 
 %TODO ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).
