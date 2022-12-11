@@ -33,8 +33,8 @@
 		"scope": "prolog",
 		"prefix": "doif",
 		"body": [
-			"r$1(move($2)):-",
-			"\tsee(normal, $2, '${3:#}').",
+			"r$2(${1:inicio},move($3)):-",
+			"\tvision($2, '${3:#}').",
 		],
 		"description": "move if see"
 	},
@@ -43,8 +43,8 @@
 		"scope": "prolog",
 		"prefix": "doifnot",
 		"body": [
-			"r$1(move($2)):-",
-			"\tnot(see(normal, $2, '${3:#}')).",
+			"r$2(${1:inicio},move($3)):-",
+			"\tnot(vision($2, '${3:#}')).",
 		],
 		"description": "move if see"
 	},
@@ -53,7 +53,7 @@
 		"scope": "prolog",
 		"prefix": "no",
 		"body": [
-			"not(see(normal, $2, '${3:#}')),",
+			"not(vision($2, '${3:#}')),",
 		],
 		"description": "If not see"
 	},
@@ -62,32 +62,33 @@
 		"scope": "prolog",
 		"prefix": "r",
 		"body": [
-			"r$1(move($2)).",
+			"r$2(${1:inicio},move($3)).",
 		],
 		"description": "To move"
 	},
 
-	"rMoveNotSee": {
+	"rVision": {
 		"scope": "prolog",
-		"prefix": "rno",
+		"prefix": "vis",
 		"body": [
-			"r$1(move($2)):-",
-			"  not(see(normal, $2, '${3:#}')),",
-			"  writeln('r$1 multiVision to $2')."
+			"r$2(${1:inicio},move($3)):-",
+			"  ${5:not}(vision($3, '${4:#}')),",
+			"  writeln('r$2 vision $5 to $3')."
 		],
 		"description": "To move if not see"
 	},
+
 
 	"multiVision": {
 		"scope": "prolog",
 		"prefix": "multiVision",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  multiVision(",
-			"    '${3: }', '${4: }', '${5: }',",
-			"    '${6: }', '${11: }', '${7: }',",
-			"    '${8: }', '${9: }', '${10: }'),",
-			"  writeln('r$1 multiVision to $2')."
+			"    '${4: }', '${5: }', '${6: }',",
+			"    '${7: }', '${12: }', '${8: }',",
+			"    '${9: }', '${10: }', '${11: }'),",
+			"  writeln('r$2 multiVision to $3')."
 		],
 		"description": "To move watching all enviroment"
 	},
@@ -96,12 +97,12 @@
 		"scope": "prolog",
 		"prefix": "visionLeft",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  visionLeft(",
-			"    '${3: }', /**//**/",
-			"    '${4: }', '${6: }'/**/,",
-			"    '${5: }' /**//**/),",
-			"  writeln('r$1 visionLeft to $2')."
+			"    '${4: }', /**//**/",
+			"    '${5: }', '${7: }'/**/,",
+			"    '${6: }' /**//**/),",
+			"  writeln('r$2 visionLeft to $3')."
 		],
 		"description": "To move watching left side"
 	},
@@ -110,12 +111,12 @@
 		"scope": "prolog",
 		"prefix": "visionRight",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  visionRight(",
-			"    /**//**/'${3: }',",
-			"    /**/'${6: }','${4: }',",
-			"    /**//**/'${5: }'),",
-			"  writeln('r$1 visionRight to $2')."
+			"    /**//**/'${4: }',",
+			"    /**/'${7: }','${5: }',",
+			"    /**//**/'${6: }'),",
+			"  writeln('r$2 visionRight to $3')."
 		],
 		"description": "To move watching Right side"
 	},
@@ -124,12 +125,12 @@
 		"scope": "prolog",
 		"prefix": "visionUp",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  visionUp(",
-			"    '${3: }','${4: }','${5: }',",
-			"    /**/'${6: }' /**/",
+			"    '${4: }','${5: }','${6: }',",
+			"    /**/'${7: }' /**/",
 			"    /**//**//**/),",
-			"  writeln('r$1 visionUp to $2')."
+			"  writeln('r$2 visionUp to $3')."
 		],
 		"description": "To move watching Up side"
 	},
@@ -138,12 +139,12 @@
 		"scope": "prolog",
 		"prefix": "visionDown",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  visionDown(",
 			"    /**//**//**/",
-			"    /**/'${6: }'/**/,",
-			"    '${3: }','${4: }','${5: }'),",
-			"  writeln('r$1 visionDown to $2')."
+			"    /**/'${7: }'/**/,",
+			"    '${4: }','${5: }','${6: }'),",
+			"  writeln('r$2 visionDown to $3')."
 		],
 		"description": "To move watching Down side"
 	},
@@ -152,12 +153,12 @@
 		"scope": "prolog",
 		"prefix": "visionUpLeft",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  visionUpLeft(",
-			"    '${3: }', '${4: }',/**/",
-			"    '${5: }', '${6: }'/**/",
+			"    '${4: }', '${5: }',/**/",
+			"    '${6: }', '${7: }'/**/",
 			"    /**//**//**/),",
-			"  writeln('r$1 visionUpLeft to $2')."
+			"  writeln('r$2 visionUpLeft to $3')."
 		],
 		"description": "To move watching UpLeft side"
 	},
@@ -166,12 +167,12 @@
 		"scope": "prolog",
 		"prefix": "visionUpRight",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  visionUpRight(",
-			"    /**/'${3: }','${4: }',",
-			"    /**/'${6: }','${5: }'",
+			"    /**/'${4: }','${5: }',",
+			"    /**/'${7: }','${6: }'",
 			"    /**//**//**/),",
-			"  writeln('r$1 visionUpRight to $2')."
+			"  writeln('r$2 visionUpRight to $3')."
 		],
 		"description": "To move watching UpRight side"
 	},
@@ -180,12 +181,12 @@
 		"scope": "prolog",
 		"prefix": "visionDownLeft",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  visionDownLeft(",
 			"    /**//**//**/",
-			"    '${5: }','${6: }'/**/,",
-			"    '${3: }','${4: }'/**/),",
-			"  writeln('r$1 visionDownLeft to $2')."
+			"    '${6: }','${7: }'/**/,",
+			"    '${4: }','${5: }'/**/),",
+			"  writeln('r$2 visionDownLeft to $3')."
 		],
 		"description": "To move watching DownLeft side"
 	},
@@ -194,12 +195,12 @@
 		"scope": "prolog",
 		"prefix": "visionDownRight",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  visionDownRight(",
 			"    /**//**//**/",
-			"    /**/'${6: }','${3: }',",
-			"    /**/'${4: }','${5: }'),",
-			"  writeln('r$1 visionDownRight to $2')."
+			"    /**/'${7: }','${4: }',",
+			"    /**/'${5: }','${6: }'),",
+			"  writeln('r$2 visionDownRight to $3')."
 		],
 		"description": "To move watching DownRight side"
 	},
@@ -208,12 +209,12 @@
 		"scope": "prolog",
 		"prefix": "wideVisionLeft",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  wideVisionLeft(",
-			"    '${3: }', '${6: }'/**/,",
-			"    '${4: }', '${8: }'/**/,",
-			"    '${5: }', '${7: }'/**/),",
-			"  writeln('r$1 wideVisionLeft to $2')."
+			"    '${4: }', '${7: }'/**/,",
+			"    '${5: }', '${9: }'/**/,",
+			"    '${6: }', '${8: }'/**/),",
+			"  writeln('r$2 wideVisionLeft to $3')."
 		],
 		"description": "To move watching all Left"
 	},
@@ -222,12 +223,12 @@
 		"scope": "prolog",
 		"prefix": "wideVisionRight",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  wideVisionRight(",
-			"    /**/'${6: }','${3: }',",
-			"    /**/'${8: }','${4: }',",
-			"    /**/'${7: }','${5: }'),",
-			"  writeln('r$1 wideVisionRight to $2')."
+			"    /**/'${7: }','${4: }',",
+			"    /**/'${9: }','${5: }',",
+			"    /**/'${8: }','${6: }'),",
+			"  writeln('r$2 wideVisionRight to $3')."
 		],
 		"description": "To move watching all Right"
 	},
@@ -236,12 +237,12 @@
 		"scope": "prolog",
 		"prefix": "wideVisionUp",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  wideVisionUp(",
-			"    '${3: }', '${4: }','${5: }',",
-			"    '${6: }', '${8: }','${7: }'",
+			"    '${4: }', '${5: }','${6: }',",
+			"    '${7: }', '${9: }','${8: }'",
 			"    /**//**//**/),",
-			"  writeln('r$1 wideVisionUp to $2')."
+			"  writeln('r$2 wideVisionUp to $3')."
 		],
 		"description": "To move watching all Up"
 	},
@@ -250,12 +251,12 @@
 		"scope": "prolog",
 		"prefix": "wideVisionDown",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  wideVisionDown(",
 			"    /**//**//**/",
-			"    '${6: }', '${8: }','${7: }',",
-			"    '${3: }', '${4: }','${5: }'),",
-			"  writeln('r$1 wideVisionDown to $2')."
+			"    '${7: }', '${9: }','${8: }',",
+			"    '${4: }', '${5: }','${6: }'),",
+			"  writeln('r$2 wideVisionDown to $3')."
 		],
 		"description": "To move watching all Down"
 	},
@@ -264,12 +265,12 @@
 		"scope": "prolog",
 		"prefix": "wideVisionUpLeft",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  wideVisionUpLeft(",
-			"    '${3: }', '${4: }','${5: }',",
-			"    '${6: }', '${8: }'/**/,",
-			"    '${7: }' /**//**/),",
-			"  writeln('r$1 wideVisionUpLeft to $2')."
+			"    '${4: }', '${5: }','${6: }',",
+			"    '${7: }', '${9: }'/**/,",
+			"    '${8: }' /**//**/),",
+			"  writeln('r$2 wideVisionUpLeft to $3')."
 		],
 		"description": "To move watching all UpLeft"
 	},
@@ -278,12 +279,12 @@
 		"scope": "prolog",
 		"prefix": "wideVisionUpRight",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  wideVisionUpRight(",
-			"    '${3: }','${4: }','${5: }',",
-			"    /**/'${8: }','${6: }',",
-			"    /**//**/'${7: }'),",
-			"  writeln('r$1 wideVisionUpRight to $2')."
+			"    '${4: }','${5: }','${6: }',",
+			"    /**/'${9: }','${7: }',",
+			"    /**//**/'${8: }'),",
+			"  writeln('r$2 wideVisionUpRight to $3')."
 		],
 		"description": "To move watching all UpRight"
 	},
@@ -292,12 +293,12 @@
 		"scope": "prolog",
 		"prefix": "wideVisionDownLeft",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  wideVisionDownLeft(",
-			"    '${6: }' /**//**/,",
-			"    '${7: }', '${8: }'/**/,",
-			"    '${3: }', '${4: }','${5: }'),",
-			"  writeln('r$1 wideVisionDownLeft to $2')."
+			"    '${7: }' /**//**/,",
+			"    '${8: }', '${9: }'/**/,",
+			"    '${4: }', '${5: }','${6: }'),",
+			"  writeln('r$2 wideVisionDownLeft to $3')."
 		],
 		"description": "To move watching all DownLeft"
 	},
@@ -306,12 +307,12 @@
 		"scope": "prolog",
 		"prefix": "wideVisionDownRight",
 		"body": [
-			"r$1(move($2)):-",
+			"r$2(${1:inicio},move($3)):-",
 			"  wideVisionDownRight(",
-			"    /**//**/'${6: }',",
-			"    /**/'${8: }','${7: }',",
-			"    '${3: }','${4: }','${5: }'),",
-			"  writeln('r$1 wideVisionDownRight to $2')."
+			"    /**//**/'${7: }',",
+			"    /**/'${9: }','${8: }',",
+			"    '${4: }','${5: }','${6: }'),",
+			"  writeln('r$2 wideVisionDownRight to $3')."
 		],
 		"description": "To move watching all DownRight"
 	},

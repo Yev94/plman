@@ -130,10 +130,10 @@ multiVision(OBJ1, OBJ2, OBJ3, OBJ4, OBJ5, OBJ6, OBJ7, OBJ8, OBJ9):-
 % Inicio deficinión objetos
 
 validDir(DIR):- 
-  DIR = up; 
-  DIR = left; 
   DIR = down; 
-  DIR = right.
+  DIR = up; 
+  DIR = right; 
+  DIR = left.
 
 validObjects(CHAR):-
   CHAR = a;
@@ -177,12 +177,24 @@ validSpellingObjects(Obstacle, Spell):-
     Obstacle = '%', Spell = 'flIpEnDO';
   havingObject(appearance('!')), 
     Obstacle = 'E', Spell = 'aV4dA_keDaVra'.
+
+
 % Fin definición objetos
-
-
+zigZag(zUpLeft, zDown, left).
+zigZag(zDown, zDownLeft, down).
+zigZag(zDownLeft, zUp, left).
+zigZag(zUp, zUpLeft, up).
 
 %%..............Inicio Cambio de estados.................
-%/Estado
+%/ Que compruebe el número y que lo guarde 
+%/ Que coja la llave correcta
+:-dynamic llaveCorrecta/1.
+llaveCorrecta(n).
+
+guardarLlave(Z):-
+  retractall(llaveCorrecta(_)),
+  assert(llaveCorrecta(Z)).
+
 :-dynamic estado/1.
 estado(inicio).
 
@@ -190,44 +202,35 @@ cambiarE(E):-
   retractall(estado(_)),
   assert(estado(E)).
 
-% %/Contador
-% :- dynamic contador/1.
-% contador(0).
+:- dynamic contador/1.
+contador(0).
 
-% incrementarContador:-
-%   contador(C),
-%   retractall(contador(C)),
-%   NuevoC is C + 1,
-%   asserta(contador(NuevoC)).
+incrementarContador:-
+  contador(C),
+  retractall(contador(C)),
+  NuevoC is C + 1,
+  asserta(contador(NuevoC)).
 
-% mostrarContador:-
-% contador(C),
-% write('El valor del contador es: '), writeln(C).
-
-%/Personalizado
-
+mostrarContador:-
+contador(C),
+write('El valor del contador es: '), writeln(C).
 
 %%................Fin Cambio de estados.................
+
+
 %? ========= Reglas INICIO personalizadas por Objeto =========
 %! --------- inicio Reglas INICIO Personalizadas ---------
 %! doact
 
-%/ Do con Estado
-do(ACT) :- 
-  estado(EST), 
-  not(havingObject(appearance(_))), 
-  r1(EST, ACT), 
+do(ACT) :-
+  contador(C),
+  C = 0,
+  r0(ACT).
+
+do(ACT) :-
+  estado(EST),
+  r1(EST, ACT),
   write('Estado '), writeln(EST).
-
-% %/ Do con Contador
-% do(ACT) :-
-%   disparo(D),
-%   D < 3,
-%   incrementarContador,
-%   not(havingObject(appearance(l))),
-%   r1(ACT).
-
-
 
 
 %! --------- fin Reglas INICIO Personalizadas -----------
@@ -235,7 +238,9 @@ do(ACT) :- doit(ACT).
 %% --------- inicio Reglas FIN Personalizadas -----------
 %% doact
 
-
+do(ACT) :-
+  estado(EST),
+  r2(EST, ACT).
 
 %% --------- fin Reglas FIN Personalizadas --------------
 do(ACT) :- donone(ACT). 
@@ -246,54 +251,179 @@ do(ACT) :- donone(ACT).
 %! widevision
 %! multiVision
 
+r0(get(DIR)) :-
+  see(normal, DIR, OBJ), 
+  not(havingObject),
+  llaveCorrecta(OBJ),
+  validDir(DIR),
+  not(visionDown(
+    /**//**//**/
+    /**/ _ /**/,
+    '+', OBJ,'#')),
+  not(visionDown(
+    /**//**//**/
+    /**/ _ /**/,
+    '#', OBJ,'+')),
+  write('get '), write(OBJ), write(' from '), writeln(DIR).
+
+r1(inicio, move(up)):-
+  visionDown(
+    /**//**//**/
+    /**/ _ /**/,
+     X ,'+', Y),
+  Z is X + Y,
+  guardarLlave(Z),
+  cambiarE(zUpLeft),
+  write('La llave es '), writeln(Z), 
+  writeln('r1 move to right').
+
+r1(zDownLeft, move(up)):-
+  wideVisionDownLeft(
+    '#' /**//**/,
+    '#',  _ /**/,
+    '#', '#','#'),
+  cambiarE(goDoorUp),
+  writeln('r1 wideVisionDownLeft to up').
+
+r1(CUR, move(DIR)):-
+  zigZag(CUR, NEX, DIR),
+  cambiarE(NEX),
+write('r1 multiVision to '), writeln(CUR).
+
+r1(goDoorUp, move(up)):-
+  not(wideVisionUpLeft(
+    '#', '#','#',
+    '#',  _ /**/,
+    '#' /**//**/)),
+  writeln('r1 wideVisionUpLeft to up').
+
+r1(goDoorUp, move(right)):-
+  wideVisionUpLeft(
+    '#', '#','#',
+    '#',  _ /**/,
+    '#' /**//**/),
+  cambiarE(goDoorRight),
+  writeln('r1 wideVisionUpLeft to up').
+
+r1(goDoorRight, move(right)):-
+  not(wideVisionUpRight(
+    '#','#','#',
+    /**/ _ ,'#',
+    /**//**/'#')),
+  writeln('r1 wideVisionUpRight to right').
+
+r1(goDoorRight, move(down)):-
+  wideVisionUpRight(
+    '#','#','#',
+    /**/ _ ,'#',
+    /**//**/'#'),
+    cambiarE(goDoorDown),
+  writeln('r1 wideVisionUpRight to right').
 
 
+r1(goDoorDown, move(down)):-
+  not(visionDown(
+    /**//**//**/
+    /**/ _ /**/,
+    '+', _ ,'#')),
+  writeln('r visionDown to down').
+
+r1(goDoorDown, move(left)):-
+  visionDown(
+    /**//**//**/
+    /**/ _ /**/,
+    '+', _ ,'#'),
+  cambiarE(abirPuerta),
+  writeln('r1 visionDown to down').
+
+r1(abirPuerta, use(down)) :-
+  see(normal, down, '+'), 
+  cambiarE(p1Pistola),
+  writeln('Open Door to Down').
 
 
 %! ===== Fin SubReglas INICIO personalizadas por mapa ========
 
-%Ponemos la condición de validDir antes que vision para que se cumpla el orden que le hemos asignado
 doit(get(DIR)) :-
-  validDir(DIR),
   vision(DIR, OBJ), 
   validObjects(OBJ), 
+  validDir(DIR),
   write('get '), write(OBJ), write(' from '), writeln(DIR).
 
 doit(use(DIR)) :-
+  see(normal, DIR, Obstacle), 
   validDir(DIR), 
-  vision(DIR, Obstacle), 
   open(Obstacle),
   write('open '), write(Obstacle), write(' to '), writeln(DIR).
 
 doit(drop(DIR)) :-
+  see(normal, DIR, OBJ),
   validDir(DIR),
-  vision(DIR, OBJ),
   dropIn(OBJ),
   write('DROP into'), write(OBJ), write(' '), writeln(DIR).
 
 doit(use(Spell, DIR)) :-
+  see(normal, DIR, Obstacle), 
   validDir(DIR), 
-  vision(DIR, Obstacle), 
   validSpellingObjects(Obstacle, Spell),
   write('open '), write(Obstacle), write(' to '), write(DIR), write(' spelling '), writeln(Spell).
 
-doit(move(DIR)) :- 
-  validDir(DIR),
-  vision(DIR, '.'), 
-  write('move '), writeln(DIR).
+% doit(move(DIR)) :- 
+%   see(normal, DIR, '.'), 
+%   validDir(DIR),
+%   write('move '), writeln(DIR).
 
 %% ===== SubReglas FIN personalizadas por mapa ============
 %% vision
 %% widevision
 %% multivision
 
+r2(p1Pistola, drop(up)):-
+  contador(D),
+  D = 0,
+  incrementarContador,
+  writeln('r1 multiVision to ').
 
-r(inicio,move()):-
-  multiVision(
-    ' ', ' ', ' ',
-    ' ', ' ', ' ',
-    ' ', ' ', ' '),
-  writeln('rinicio multiVision to ').
+r2(p1Pistola, move(down)):-
+  contador(D),
+  D < 4,
+  incrementarContador,
+  writeln('r1 multiVision to ').
+
+r2(p1Pistola, move(right)):-
+  not(vision(right, '#')),
+  writeln('r2 vision to right').
+
+r2(p1Pistola, move(left)):-
+  (vision(right, '#')),
+  cambiarE(p2Pistola),
+  writeln('r2 vision to left').
+
+
+r2(p2Pistola, move(left)):-
+  not(vision(left, '#')),
+  writeln('r2 vision to left').
+
+r2(p2Pistola, move(down)):-
+  (vision(left, '#')),
+  cambiarE(p3Pistola),
+  writeln('r2 vision to down').
+
+r2(p3Pistola, move(down)):-
+  not(vision(down, '#')),
+  writeln('r2 vision to down').
+
+r2(p3Pistola, use(right)):-
+  (vision(down, '#')),
+  cambiarE(termina),
+  writeln('r2 vision to right').
+
+r2(termina, move(right)):-
+  not(vision(right, '#')),
+  writeln('r2 vision to right').
+
 
 %% ===== Fin SubReglas FIN personalizadas por mapa ========
 donone(move(none)).
+
+
